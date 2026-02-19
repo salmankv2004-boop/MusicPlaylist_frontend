@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL:
+    import.meta.env.MODE === "production"
+      ? "https://music-playlist-backend.vercel.app"
+      : "http://localhost:3000",
 });
 
 API.interceptors.request.use((req) => {
