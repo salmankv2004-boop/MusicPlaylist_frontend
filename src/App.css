@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  background: #121212;
+  color: white;
+  font-family: Arial;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background: #000;
+}
+
+.nav-links a {
+  color: #aaa;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+.nav-links .active {
+  color: #1db954;
+  font-weight: bold;
+}
+
+.song-card {
+  background: #1e1e1e;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 8px;
+}
