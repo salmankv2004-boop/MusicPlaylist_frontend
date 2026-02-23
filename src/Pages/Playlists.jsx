@@ -64,23 +64,22 @@ export default function Playlists() {
   };
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white font-sans p-8">
-
+    <div className="min-h-screen bg-[#121212] text-white font-sans p-4 sm:p-8">
       {/* 🔹 HEADER */}
-      <div className="flex justify-between items-center mb-10">
-        <h2 className="text-3xl font-bold tracking-tight">Your Library</h2>
-        <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8 sm:mb-10">
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white/90">Your Library</h2>
+        <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
           <button
             onClick={() => navigate("/home")}
-            className="text-gray-400 hover:text-white transition font-bold"
+            className="flex-1 sm:flex-none text-gray-400 hover:text-white transition font-bold text-sm sm:text-base border border-white/10 px-4 py-2 rounded-full"
           >
             Home
           </button>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="bg-white text-black px-4 py-2 rounded-full font-bold hover:scale-105 transition"
+            className="flex-1 sm:flex-none bg-white text-black px-4 py-2 rounded-full font-bold hover:scale-105 transition text-sm sm:text-base shadow-lg"
           >
-            + Create Playlist
+            + New Playlist
           </button>
         </div>
       </div>

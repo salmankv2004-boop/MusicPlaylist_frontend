@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import API from "../API/axios";
 import { toast } from "react-toastify";
+import ImageCropper from "./ImageCropper";
 
 export default function AllSongs() {
   const [songs, setSongs] = useState([]);
@@ -16,6 +17,9 @@ export default function AllSongs() {
   const [thumbnail, setThumbnail] = useState(null);
   const [singerImage, setSingerImage] = useState(null);
   const [uploading, setUploading] = useState(false);
+
+  const [cropImage, setCropImage] = useState(null);
+  const [cropType, setCropType] = useState(null);
 
   // 🔹 FETCH SONGS
   const fetchSongs = async () => {
@@ -93,6 +97,31 @@ export default function AllSongs() {
     }
   };
 
+  const onFileChange = (e, type) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setCropImage(reader.result);
+        setCropType(type);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCropDone = (croppedBlob) => {
+    const croppedFile = new File([croppedBlob], "cropped_image.jpg", { type: "image/jpeg" });
+    if (cropType === "thumbnail") setThumbnail(croppedFile);
+    if (cropType === "singer") setSingerImage(croppedFile);
+    setCropImage(null);
+    setCropType(null);
+  };
+
+  const handleCropCancel = () => {
+    setCropImage(null);
+    setCropType(null);
+  };
+
   // 🔹 OPEN PLAYLIST MODAL
   const openPlaylistModal = (songId) => {
     setSelectedSongId(songId);
@@ -132,17 +161,18 @@ export default function AllSongs() {
     }
   };
   return (
-    <div className="p-6 min-h-screen bg-gradient-to-br from-purple-900 via-black to-gray-900 text-white">
+    <div className="p-4 sm:p-6 min-h-screen bg-gradient-to-br from-purple-900 via-black to-gray-900 text-white">
       {/* HEADER */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-purple-500 to-blue-400">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-purple-500 to-blue-400">
           All Songs
         </h2>
         <button
           onClick={() => setUploadOpen(true)}
-          className="bg-gradient-to-r from-green-400 to-blue-500 px-5 py-2 rounded-full font-semibold shadow-lg hover:scale-105 transform transition"
+          className="fixed sm:static bottom-6 right-6 sm:bottom-0 sm:right-0 z-40 bg-gradient-to-r from-green-400 to-blue-500 px-6 py-3 sm:px-5 sm:py-2 rounded-full font-bold shadow-2xl sm:shadow-lg hover:scale-110 active:scale-95 transform transition-all flex items-center gap-2"
         >
-          + Add Song
+          <span className="text-xl sm:text-base">+</span>
+          <span className="sm:inline">Add Song</span>
         </button>
       </div>
 
@@ -158,7 +188,7 @@ export default function AllSongs() {
                 <img
                   src={song.thumbnail}
                   alt={song.title}
-                  className="w-full h-40 object-cover rounded-xl mb-4"
+                  className="w-full aspect-square object-cover rounded-xl mb-4 shadow-inner shadow-black/20"
                 />
               ) : (
                 <div className="w-full h-40 bg-gray-700 flex items-center justify-center rounded-xl mb-4 text-gray-500">
@@ -171,7 +201,7 @@ export default function AllSongs() {
                   <img
                     src={song.singerImage}
                     alt={song.artist}
-                    className="w-8 h-8 rounded-full object-cover border-2 border-pink-500"
+                    className="w-8 h-8 rounded-full object-cover object-top border-2 border-pink-500"
                   />
                 ) : (
                   <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center text-xs">
@@ -211,7 +241,7 @@ export default function AllSongs() {
       {/* 🔹 UPLOAD MODAL */}
       {uploadOpen && (
         <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
-          <div className="bg-gradient-to-tr from-gray-800 via-gray-900 to-black p-6 rounded-3xl w-96 shadow-2xl animate-slide-in-right">
+          <div className="bg-gradient-to-tr from-gray-800 via-gray-900 to-black p-5 sm:p-6 rounded-3xl w-[95%] max-w-md shadow-2xl animate-fade-in">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-2xl font-bold text-purple-400">Upload Song</h3>
               <button
@@ -256,7 +286,7 @@ export default function AllSongs() {
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => setThumbnail(e.target.files[0])}
+                  onChange={(e) => onFileChange(e, "thumbnail")}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
                 <div className="flex flex-col items-center justify-center text-gray-400 group-hover:text-pink-400">
@@ -272,7 +302,7 @@ export default function AllSongs() {
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => setSingerImage(e.target.files[0])}
+                  onChange={(e) => onFileChange(e, "singer")}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
                 <div className="flex flex-col items-center justify-center text-gray-400 group-hover:text-purple-400">
@@ -298,7 +328,7 @@ export default function AllSongs() {
       {/* 🔹 PLAYLIST MODAL */}
       {playlistModalOpen && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-          <div className="bg-gradient-to-tr from-gray-800 via-gray-900 to-black p-6 rounded-3xl w-96 shadow-2xl animate-slide-in-up">
+          <div className="bg-gradient-to-tr from-gray-800 via-gray-900 to-black p-5 sm:p-6 rounded-3xl w-[95%] max-w-md shadow-2xl animate-slide-in-up">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-2xl font-bold text-pink-400">Select Playlist</h3>
               <button
@@ -326,6 +356,16 @@ export default function AllSongs() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* 🔹 IMAGE CROPPER MODAL */}
+      {cropImage && (
+        <ImageCropper
+          image={cropImage}
+          aspect={1}
+          onCropDone={handleCropDone}
+          onCropCancel={handleCropCancel}
+        />
       )}
     </div>
   );

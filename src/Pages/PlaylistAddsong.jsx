@@ -94,10 +94,10 @@ export default function PlaylistAddsong() {
       </button>
 
       {/* 🔹 Playlist Header */}
-      <div className="flex flex-col md:flex-row items-end gap-6 p-8 bg-gradient-to-b from-gray-700/50 to-gray-900/50 pt-20">
+      <div className="flex flex-col sm:flex-row items-center sm:items-end gap-6 p-6 sm:p-8 bg-gradient-to-b from-gray-700/50 to-gray-900/50 pt-20 text-center sm:text-left">
         {/* Playlist Cover Art Placeholder */}
-        <div className="w-52 h-52 shadow-2xl shadow-black/50 rounded-lg bg-gradient-to-br from-green-400 to-blue-600 flex items-center justify-center">
-          <span className="text-6xl">🎵</span>
+        <div className="w-40 h-40 sm:w-52 sm:h-52 shadow-2xl shadow-black/50 rounded-lg bg-gradient-to-br from-green-400 to-blue-600 flex items-center justify-center">
+          <span className="text-5xl sm:text-6xl">🎵</span>
         </div>
 
         <div className="flex flex-col gap-2 mb-2">
@@ -119,11 +119,10 @@ export default function PlaylistAddsong() {
       </div>
 
       {/* 🔹 Song List Table */}
-      <div className="px-6 pb-20">
-
+      <div className="px-4 sm:px-6 pb-20">
         {/* Table Header */}
-        <div className="grid grid-cols-[auto_1fr_1fr_auto] gap-4 text-gray-400 border-b border-gray-800 pb-2 px-4 text-sm font-medium uppercase tracking-wider">
-          <div className="w-8 text-center">#</div>
+        <div className="grid grid-cols-[auto_1fr_auto] sm:grid-cols-[auto_1fr_1fr_auto] gap-2 sm:gap-4 text-gray-400 border-b border-gray-800 pb-2 px-2 sm:px-4 text-[10px] sm:text-sm font-medium uppercase tracking-wider">
+          <div className="w-6 sm:w-8 text-center">#</div>
           <div>Title</div>
           <div className="hidden sm:block">Artist</div>
           <div className="text-right">Action</div>
@@ -137,7 +136,7 @@ export default function PlaylistAddsong() {
             songs.map((song, index) => (
               <div
                 key={song._id || index}
-                className="group grid grid-cols-[auto_1fr_1fr_auto] gap-4 items-center p-3 rounded-lg hover:bg-white/10 transition cursor-default"
+                className="group grid grid-cols-[auto_1fr_auto] sm:grid-cols-[auto_1fr_1fr_auto] gap-2 sm:gap-4 items-center p-2 sm:p-3 rounded-lg hover:bg-white/10 transition cursor-default"
               >
                 {/* Number / Play Icon on Hover */}
                 <div className="w-8 text-center text-gray-400 relative">
@@ -150,7 +149,7 @@ export default function PlaylistAddsong() {
                 {/* Title & Thumbnail */}
                 <div className="flex items-center gap-4 overflow-hidden">
                   {song.thumbnail ? (
-                    <img src={song.thumbnail} alt="" className="w-10 h-10 rounded shadow-md object-cover" />
+                    <img src={song.thumbnail} alt="" className="w-10 h-10 rounded shadow-md object-contain bg-black/40" />
                   ) : (
                     <div className="w-10 h-10 bg-gray-700/50 rounded flex items-center justify-center text-xs">🎵</div>
                   )}
@@ -213,7 +212,7 @@ export default function PlaylistAddsong() {
               >
                 <div className="flex items-center gap-4">
                   {song.thumbnail ? (
-                    <img src={song.thumbnail} alt="" className="w-12 h-12 rounded object-cover" />
+                    <img src={song.thumbnail} alt="" className="w-12 h-12 rounded object-contain bg-black/40" />
                   ) : (
                     <div className="w-12 h-12 bg-gray-700 flex items-center justify-center rounded">🎵</div>
                   )}

@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "tuneflow-frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,6 +13,7 @@
     "axios": "^1.13.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-easy-crop": "^5.5.6",
     "react-router-dom": "^7.10.1",
     "react-toastify": "^11.0.5"
   },

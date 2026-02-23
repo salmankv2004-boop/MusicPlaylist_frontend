@@ -1,3 +1,50 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+
+    html,
+    body {
+        @apply overflow-x-hidden w-full;
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+        touch-action: manipulation;
+    }
+
+    /* Hide scrollbars */
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Custom animations if needed */
+@keyframes slide-in-up {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-slide-in-up {
+    animation: slide-in-up 0.3s ease-out;
+}
+
+.animate-fade-in {
+    animation: fade-in 0.4s ease-out;
+}

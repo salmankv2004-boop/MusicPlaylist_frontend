@@ -22,7 +22,7 @@ export default function Login() {
 
     try {
       if (isSignup) {
-        await API.post("/loginUser", { name, email });
+        await API.post("/createUser", { name, email });
         showMessage("Signup successful. Please login.");
         setIsSignup(false);
         setUsername("");
@@ -49,11 +49,11 @@ export default function Login() {
 
       <form
         onSubmit={handleSubmit}
-        className="relative z-10 backdrop-blur-2xl bg-white/5 p-10 rounded-3xl w-96 shadow-2xl border border-white/10 animate-fade-in"
+        className="relative z-10 backdrop-blur-2xl bg-white/5 p-6 sm:p-10 rounded-3xl w-[90%] max-w-[400px] shadow-2xl border border-white/10 animate-fade-in"
       >
         {/* Logo / Title */}
         <h1 className="text-5xl font-extrabold text-center mb-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 drop-shadow-md">
-          🎵 supra
+          🎵 TuneFlow
         </h1>
         <p className="text-md text-center text-gray-300 mb-8 font-light">
           {isSignup ? "Create your vibrant music space" : "Welcome back to your tunes!"}
